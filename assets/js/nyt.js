@@ -1,48 +1,52 @@
 $(document).ready(function() {
 
-  var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+  var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=eae7407fee8d450589f3b327a198477a&";
   var query;
   var numRecords = 5;
   var beginDate;
   var endDate;
-  var parameters = [];
   
+
+function clear() {
+  query = '';
+  numRecords = 5;
+  beginDate = '';
+  endDate = '';
+  url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=eae7407fee8d450589f3b327a198477a&";
+}  
 
 
 
 
 $('.submit').on('click',function(event) {
-
+  $('#searchResults').empty();
   event.preventDefault();
 
   
-  query = '&q=' + $('#searchTerm').val().trim();
+  query = $('#searchTerm').val().trim();
   $('#searchTerm').val("");
-  console.log(query);
+
+  if ($('#numRecords').val() != '')
   numRecords = $('#numRecords').val();
   $('#numRecords').val("");
-  console.log(numRecords);
+
   beginDate = $('#startDate').val() + '0101';
   $('#startDate').val("");
-  console.log(beginDate);
+
   endDate = $('#endDate').val() + '1231';
   $('#endDate').val("");
-  console.log(endDate);
 
-  parameters.push(query)
 
 
   if ($('#startDate').val() == '' && $('#endDate').val() == ''){
-    url += '?' + $.param({
-      'api-key': "eae7407fee8d450589f3b327a198477a",
+    url += $.param({
       'q': query,
       'sort': 'newest',
     });
     console.log(url);
   }
   else if ($('#startDate').val() != '' && $('#endDate').val() != '') {
-    url += '?' + $.param({
-      'api-key': "eae7407fee8d450589f3b327a198477a",
+    url += $.param({
       'q': query,
       'begin_date': beginDate,
       'end_date': endDate,
@@ -50,16 +54,14 @@ $('.submit').on('click',function(event) {
     });
   }
   else if ($('#startDate').val() != ''){
-    url += '?' + $.param({
-      'api-key': "eae7407fee8d450589f3b327a198477a",
+    url += $.param({
       'q': query,
       'begin_date': beginDate, 
       'sort': 'newest',   
     });
   }
   else if ($('#endDate').val() != ''){
-    url += '?' + $.param({
-      'api-key': "eae7407fee8d450589f3b327a198477a",
+    url += $.param({
       'q': query,
       'end_date': endDate,    
       'sort': 'newest',
@@ -82,7 +84,7 @@ $('.submit').on('click',function(event) {
       var articleSection = '<h4>' + article[i].section_name + '</h4>';
       var articleP = '<p>' + article[i].lead_paragraph + '</p>';
       if (article[i].multimedia != '') {
-        var articleImg = '<img src="http://nyt.com/' + article[i].multimedia[0].url + '"/>';
+        var articleImg = '<img src="http://nyt.com/' + article[i].multimedia[0].url + '" class="img-thumbnail img-responsive"/>';
         articleDiv.append(articleTitle).append(articleSection).append(articleImg).append(articleP);
       }
       else {
@@ -99,9 +101,13 @@ $('.submit').on('click',function(event) {
       a.slice(j, j+2).wrapAll('<div class="row"></div>');
     }
 
+    clear();
+
   }).fail(function(err) {
     throw err;
   });
+
+
 });
     
 
