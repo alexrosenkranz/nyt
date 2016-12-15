@@ -5,6 +5,7 @@ $(document).ready(function() {
   var numRecords = 5;
   var beginDate;
   var endDate;
+  var page = 0;
   
 
 function clear() {
@@ -22,51 +23,21 @@ $('.submit').on('click',function(event) {
   $('#searchResults').empty();
   event.preventDefault();
 
-  
   query = $('#searchTerm').val().trim();
-  $('#searchTerm').val("");
-
-  if ($('#numRecords').val() != '')
   numRecords = $('#numRecords').val();
-  $('#numRecords').val("");
-
   beginDate = $('#startDate').val() + '0101';
-  $('#startDate').val("");
-
   endDate = $('#endDate').val() + '1231';
-  $('#endDate').val("");
+  
+  url += 'q=' + query + '&sort=newest&page='+ page;
 
+  if ($('#startDate').val()){
+    url += '&begin_date=' + beginDate;
+  }
+  if ($('#endDate').val()) {
+    url += '&end_date=' + endDate;
+  }
+  console.log(url);
 
-
-  if ($('#startDate').val() == '' && $('#endDate').val() == ''){
-    url += $.param({
-      'q': query,
-      'sort': 'newest',
-    });
-    console.log(url);
-  }
-  else if ($('#startDate').val() != '' && $('#endDate').val() != '') {
-    url += $.param({
-      'q': query,
-      'begin_date': beginDate,
-      'end_date': endDate,
-      'sort': 'newest',
-    });
-  }
-  else if ($('#startDate').val() != ''){
-    url += $.param({
-      'q': query,
-      'begin_date': beginDate, 
-      'sort': 'newest',   
-    });
-  }
-  else if ($('#endDate').val() != ''){
-    url += $.param({
-      'q': query,
-      'end_date': endDate,    
-      'sort': 'newest',
-    });
-  }
 
   $.ajax({
     url: url,
@@ -75,7 +46,7 @@ $('.submit').on('click',function(event) {
 
     console.log(result);
 
-    var article = result.response.docs
+    var article = result.response.docs;
 
     for (var i = 0; i < numRecords; i++) {
       var articleDiv = $('<div>').addClass('col-xs-12 col-sm-12 col-md-6 article');
