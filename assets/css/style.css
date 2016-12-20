@@ -1,4 +1,23 @@
+body {
+  background: url('../images/nyt_bg.jpg') no-repeat fixed;
+  background-size: cover;
+}
 .articleImage {
   float:left;
   margin-right: 10px;
+}
+
+.container .jumbotron, .panel-default .panel-heading {
+  background: #303740;
+  color: #fff;
+  border-radius: 0;
+}
+
+.panel {
+  background: rgba(255,255,255,0.7);
+  border-radius: 0;
+}
+
+.panel-default {
+  border: 3px solid #303740;
 }
