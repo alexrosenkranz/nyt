@@ -1,7 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya|Oswald');
+
 body {
   background: url('../images/nyt_bg.jpg') no-repeat fixed;
   background-size: cover;
+  font-family: 'Oswald', sans-serif;
+ 
 }
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Alegreya', serif;
+}
+
 .articleImage {
   float:left;
   margin-right: 10px;
