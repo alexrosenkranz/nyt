@@ -33,7 +33,7 @@ $(document).ready(function() {
     event.preventDefault();
 
     // Sets API parameters and display options based on form inputs
-    query = $('#searchTerm').val().trim();
+    query = escape($('#searchTerm').val().trim());
     numRecords = $('#numRecords').val();
 
     // Needed to add month and days, I picked beginning and end of year
