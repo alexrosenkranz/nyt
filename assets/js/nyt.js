@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=eae7407fee8d450589f3b327a198477a&";
   var query;
-  var numRecords = 5;
+  var numRecords;
   var beginDate;
   var endDate;
   var articleCount = 0;
@@ -10,7 +10,6 @@ $(document).ready(function() {
 
 function clear() {
   query = '';
-  numRecords = 5;
   beginDate = '';
   articleCount = 0;
   endDate = '';
@@ -69,8 +68,7 @@ $('.submit').on('click',function(event) {
         $('#searchResults').append(articleDiv);
       }
 
-      clear();
-
+      
     }).fail(function(err) {
       throw err;
     });
@@ -79,7 +77,7 @@ $('.submit').on('click',function(event) {
   else {
     $('#searchResults').html('<h2 class="text-centered">Sorry, I can only print up to 10 results at a time.')
   }
-
+clear();
 });
     
 
